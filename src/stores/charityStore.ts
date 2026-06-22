@@ -19,7 +19,7 @@ export const useCharityStore = defineStore('charity', () => {
 
   const participationTrend = computed(() =>
     projects.value.map((item) => ({
-      month: item.endDate.slice(0, 7),
+      month: item.startDate.slice(0, 7),
       value: item.participants
     }))
   );

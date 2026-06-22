@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { CarbonCategory } from '@/constants/enums';
-import { MonthlyReductionTarget } from '@/constants/carbon-factors';
+import { MonthlyBaselineEmission, MonthlyReductionTarget } from '@/constants/carbon-factors';
 import { createCarbonMock, createRealtimeCarbon } from '@/mock/carbonMock';
 import { recordAuditLog } from '@/utils/audit-log';
 import { toMonth } from '@/utils/format';
@@ -12,7 +12,10 @@ export const useCarbonStore = defineStore('carbon', () => {
   const realtimeAmount = ref(1286.4);
 
   const totalAmount = computed(() => footprints.value.reduce((sum, item) => sum + item.amount, 0));
-  const targetProgress = computed(() => Math.min(100, (realtimeAmount.value / MonthlyReductionTarget) * 100));
+  const targetProgress = computed(() => {
+    const reduced = MonthlyBaselineEmission - realtimeAmount.value;
+    return Math.max(0, Math.min(100, (reduced / MonthlyReductionTarget) * 100));
+  });
 
   const monthlySummary = computed<CarbonMonthlySummary[]>(() => {
     const map = new Map<string, number>();

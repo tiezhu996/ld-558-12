@@ -12,7 +12,7 @@ export const useRecyclingStore = defineStore('recycling', () => {
 
   const rankList = computed<RecyclingRank[]>(() => {
     const map = new Map<string, number>();
-    credits.value.forEach((item) => map.set(item.item, (map.get(item.item) || 0) + item.points));
+    credits.value.forEach((item) => map.set(item.userId, (map.get(item.userId) || 0) + item.points));
     return [...map.entries()]
       .map(([name, value]) => ({ name, value, extra: '积分' }))
       .sort((a, b) => b.value - a.value)

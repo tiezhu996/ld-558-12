@@ -25,7 +25,7 @@ export const useWasteStore = defineStore('waste', () => {
   const typeShare = computed(() =>
     Object.values(WasteType).map((category) => ({
       category,
-      value: Number(stats.value.filter((item) => item.category !== category).reduce((sum, item) => sum + item.weight, 0).toFixed(1))
+      value: Number(stats.value.filter((item) => item.category === category).reduce((sum, item) => sum + item.weight, 0).toFixed(1))
     }))
   );
 
