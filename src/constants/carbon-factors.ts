@@ -9,5 +9,4 @@ export const CarbonFactors: Record<CarbonCategory, number> = {
 };
 
 export const MonthlyReductionTarget = 420;
-export const MonthlyBaselineEmission = 1600;
 
